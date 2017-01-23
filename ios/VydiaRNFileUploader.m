@@ -100,11 +100,12 @@ RCT_EXPORT_METHOD(startUpload:(NSDictionary *)options resolve:(RCTPromiseResolve
   }
   NSString *uploadUrl = options[@"url"];
   NSString *fileURI = options[@"path"];
+  NSString *httpMethod = options[@"method"] ? options[@"method"] : @"POST";
   NSDictionary *headers = options[@"headers"];
 
   @try {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: uploadUrl]];
-    request.HTTPMethod = @"POST";
+    request.HTTPMethod = httpMethod;
     [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull val, BOOL * _Nonnull stop) {
       if ([val respondsToSelector:@selector(stringValue)]) {
         val = [val stringValue];
